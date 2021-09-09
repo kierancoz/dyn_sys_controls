@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from statistics import mean
 from scipy.signal import find_peaks
+import math
 
 
 #-----------------------------------------------------------------
@@ -15,7 +16,7 @@ from scipy.signal import find_peaks
 #    --> Then save and close the CSV file
 #-----------------------------------------------------------------
 #-----------------------------------------------------------------
-filename  = 'raw_data_test.csv' # Update filename with your own data file
+filename  = 'raw_data.csv' # Update filename with your own data file
 
 
 #-----------------------------------------------------------------
@@ -23,11 +24,11 @@ filename  = 'raw_data_test.csv' # Update filename with your own data file
 # Fill in Bifilar and phone dimensions
 # Based on Ogata PDF variable names
 #-----------------------------------------------------------------
-h =      # [m],  bifilar string length
-a =      # [m],  length between files/2
-L =      # [m],  length of phone (horizontal --> parallel to ground)
-t =      # [m],  thickness of phone
-m =      # [kg], phone mass
+h = 0.7112 # [m],  bifilar string length
+a = 0.0445 # [m],  length between files/2
+L = 0.1447 # [m],  length of phone (horizontal --> parallel to ground)
+t = 0.008 # [m],  thickness of phone
+m = 0.151 # [kg], phone mass
 
 #-----------------------------------------------------------------
 # Read CSV file and index the columns using the renamed column header names
@@ -43,11 +44,14 @@ wz = csvdata.omegaz
 # Plot raw data: wx, wy, and wz versus Time [s]
 # --> Use this to find the time values where your oscillation begins/ends
 #----------------------------------------------------------------- 
-plt.figure()
-plt.plot()
-plt.xlabel()
-plt.ylabel()
-plt.legend()
+plt.figure(1)
+plt.plot(T, wx)
+plt.plot(T, wy)
+plt.plot(T, wz)
+plt.xlabel("Time (s)")
+plt.ylabel("Angular Velocity (rad/s)")
+plt.legend(["wx", "wy", "wz"])
+plt.title("Angular Velocity vs Time")
 plt.grid()
 plt.show()
 
@@ -60,7 +64,7 @@ plt.show()
 #              and the T[it2] value that was close to 60 s
 #-----------------------------------------------------------------
 
-it1,it2 = 0,len(T)    # Update these iteration values for your own data
+it1,it2 = 6800,21088    # Update these iteration values for your own data
 Tpend   = T[it1:it2]
 wxpend  = wx[it1:it2]
 
@@ -98,8 +102,8 @@ print("T Avg [s] =",Tp_avg)
 # Theoretical (th) uses only phone mass and dimensions
 # Experimental (exp) uses measured period, phone mass, and filar dimensions
 #-----------------------------------------------------------------
-Jth  = 
-Jexp = 
+Jth  = 1/12*m*(t**2 + L**2)
+Jexp = (Tp_avg/2/math.pi)**2*m*9.81*(a)**2/h
 
 # Print functions do not require updates
 print("J experimental [kg*m^2] = % 5.6f" %(Jexp))
@@ -110,14 +114,12 @@ print("J theoretical  [kg*m^2] = % 5.6f" %(Jth))
 #     --> Plot Tpend and wxpend data
 #     --> Scatter plot Tx_peaks and wx_peaks with red x markers
 #-----------------------------------------------------------------
-plt.figure()
-plt.plot()
-plt.scatter()
-plt.xlabel()
-plt.ylabel()
-plt.title()
-plt.legend()
+plt.figure(2)
+plt.plot(Tpend, wxpend)
+plt.scatter(Tx_peaks, wx_peaks, marker='x', color = 'r')
+plt.xlabel("Time (s)")
+plt.ylabel("Angular Velocity (rad/s)")
+plt.title("Angular Velocity vs Time")
+plt.legend(["All data", "Peak data"])
 plt.grid()
 plt.show()
-
-
