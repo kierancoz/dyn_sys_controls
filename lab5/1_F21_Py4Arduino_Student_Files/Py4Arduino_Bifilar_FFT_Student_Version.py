@@ -12,17 +12,18 @@ plt.close('all') # close all plots
 #%% Section 1: Read and Plot Data
 
 # Constants
-File = 'Bifilar_Bad_Data.csv'
+File = '../../lab3/raw_data_45.csv'
 
 #---------------------------
 # Read from the Test file
 #---------------------------
 data = pd.read_csv(File)
 
-T  = np.array(data["Time (s)"])
-Wx = np.array(data["Gyroscope x (rad/s)"])
-Wy = np.array(data["Gyroscope y (rad/s)"])
-Wz = np.array(data["Gyroscope z (rad/s)"])
+# Time,omegax,omegay,omegaz,Absolute (rad/s)
+T  = np.array(data["Time"])
+Wx = np.array(data["omegax"])
+Wy = np.array(data["omegay"])
+Wz = np.array(data["omegaz"])
 
 dt = np.mean(np.diff(T)) # Calculate delta_t [s]
 
@@ -32,9 +33,9 @@ dt = np.mean(np.diff(T)) # Calculate delta_t [s]
 #---------------------------
 plt.figure()
 plt.plot( T, Wx)
-plt.title('title')
-plt.xlabel('label')
-plt.ylabel('label')
+plt.title('Angular Velocity vs Time')
+plt.xlabel('Angular Velocity (rad/s)')
+plt.ylabel('Time (s)')
 plt.grid()
 plt.show()
 
@@ -48,8 +49,8 @@ plt.show()
 # Choose time frames
 # For example "Good data", choose 2.38, 40
 T1, T2 = 0, T[-1]             
-it1    = np.nonzero(T > T1)[0][0]
-it2    = np.nonzero(T < T2)[0][-1]
+it1 = 3430
+it2 = 8300
 
 Tfft, Wxfft = T[it1:it2], Wx[it1:it2]
 
@@ -74,8 +75,8 @@ plt.plot(T,Wx)
 plt.plot(Tx_peaks,wx_peaks,'rx')
 plt.title('W [rad/s] vs Time [s]')
 plt.legend(['Wx','Peaks'])
-plt.xlabel('label')
-plt.ylabel('label')
+plt.xlabel('Angular Velocity (rad/s)')
+plt.ylabel('Time (s)')
 plt.grid()
 plt.show()
 
