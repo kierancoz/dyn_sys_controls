@@ -16,9 +16,9 @@ numDataPoints = recordTime * dataRate  # Total number of data points to be saved
 # Data to read from Arduino file
 #----------------------------------------------------------------------
 
-dataNames = ['Time', 'V1']
-dataTypes = [  '=L', '=f']
-fileName     = 'Demo_1_trial_1.csv'
+dataNames = ['Time', 'V1', 'V2']
+dataTypes = [  '=L', '=f', '=f']
+fileName     = 'Demo_test_100uF_charge.csv'
 # ----END-EDIT----------#
 
 

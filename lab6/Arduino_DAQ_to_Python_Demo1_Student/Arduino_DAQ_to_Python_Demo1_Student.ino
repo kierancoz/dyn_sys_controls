@@ -19,6 +19,10 @@ const int pin0 = A0;          // Pin use to collect analog data from potenitomet
 int analogVal0 = 0;          // variable to store potentiometer data [ints]
 float voltage0 = 0;          // variable to store potentiometer voltage [V] 
 
+const int pin1 = A1;          // Pin use to collect analog data from potenitometer
+int analogVal1 = 0;          // variable to store potentiometer data [ints]
+float voltage1 = 0;          // variable to store potentiometer voltage [V] 
+
 // ------EDIT------------- //
 // Initialize variables to collect data from other analog input here
 
@@ -29,15 +33,15 @@ float voltage0 = 0;          // variable to store potentiometer voltage [V]
 float int2volt = 5.0/1023.0; // Conversion constant from ints to volts [V/int]
 
 void setup() {
-  Serial.begin(19200);         // Being serial comms and set Baud rate
+  SerialUSB.begin(19200);         // Being SerialUSB comms and set Baud rate
   pinMode(LED_BUILTIN, OUTPUT); // Set builting LED pin (13) to output
   timer = micros();             // start timer
 }
  
 void loop() {
 
-  if (Serial.available() > 0) {       // if data is available
-    String str = Serial.readStringUntil('\n');
+  if (SerialUSB.available() > 0) {       // if data is available
+    String str = SerialUSB.readStringUntil('\n');
     readFromPC(str);
   }
   if (initLooptime && !stopProgram)      // once loop time has been initialized
@@ -48,6 +52,9 @@ void loop() {
     analogVal0 = analogRead(pin0); // get analog data from pin
     voltage0 = (float)analogVal0*int2volt; // convert to volts
 
+    analogVal1 = analogRead(pin1); // get analog data from pin
+    voltage1 = (float)analogVal1*int2volt; // convert to volts
+
   // ------EDIT------------- //
   // read and convert inputs from other analog input here
   
@@ -55,9 +62,10 @@ void loop() {
   
     unsigned long currT = micros();  // get current time
     
-    // Send data over serial line to computer
+    // Send data over SerialUSB line to computer
     sendToPC(&currT);
     sendToPC(&voltage0);
+    sendToPC(&voltage1);
     
   // ------EDIT------------- //
   // Send voltage value from other analog input here
@@ -136,23 +144,23 @@ void readFromPC(const String input)
 void sendToPC(int* data)
 {
   byte* byteData = (byte*)(data);
-  Serial.write(byteData, 2);
+  SerialUSB.write(byteData, 2);
 }
 
 void sendToPC(float* data)
 {
   byte* byteData = (byte*)(data);
-  Serial.write(byteData, 4);
+  SerialUSB.write(byteData, 4);
 }
  
 void sendToPC(double* data)
 {
   byte* byteData = (byte*)(data);
-  Serial.write(byteData, 4);
+  SerialUSB.write(byteData, 4);
 }
 
 void sendToPC(unsigned long* data)
 {
   byte* byteData = (byte*)(data);
-  Serial.write(byteData, 4);
+  SerialUSB.write(byteData, 4);
 }
