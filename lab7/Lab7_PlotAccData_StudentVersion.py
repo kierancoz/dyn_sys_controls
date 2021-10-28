@@ -235,6 +235,10 @@ print('---------------------------------------------------------')
 # plt.show()
 
 
+
+
+#CHALLENGE
+
 wx = np.array(data.wx) # [counts]
 wy = np.array(data.wy) # [counts]
 wz = np.array(data.wz) # [counts]
@@ -244,7 +248,6 @@ x_g = x*conv   # [g]
 y_g = y*conv   # [g] 
 z_g = z*conv   # [g]
 
-#CHALLENGE
 theta = [0]
 theta_alt = [0]
 wx_u = wx[1000:2000]
@@ -259,8 +262,8 @@ i_0 = 0
 for i in range(0, len(wx_u)-1):
     theta_i = np.trapz(wx_u[i_0:i], x=time_u[i_0:i])
     if wx_u[i] in peaks:
-        theta_i = 0
-        i_0 = i
+       theta_i = 0
+       i_0 = i
     theta.append(theta_i/180*3.314)
 
     theta_alt.append((m_eff*z_u[i])*L**2/2/E/I*60/3.314+.5)
