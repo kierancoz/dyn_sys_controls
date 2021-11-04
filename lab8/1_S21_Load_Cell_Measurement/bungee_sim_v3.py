@@ -51,10 +51,9 @@ m = 0.310 # this is the mass attached
 L_bungee = 9/39.37 # max bungee length
 # define the force-displacement curve for bungee
 # this is to be measured in lab
-xin = [0,1,2,3,4,5,6,7,8,9] # stretch, inches
+xin = np.array([9, 9.05, 9.25, 10.25, 12.5, 13.5, 14.75, 15.5, 16.5, 17.75, 18.5, 19.25, 19.75, 19.8]) - 9
 xa = [xc/39.37 for xc in xin] 
-ma = [0,150,180,230,250,280,325,475,810,1280] # force in grams
-Fa = [Ft*g/1000 for Ft in ma]
+Fa = np.array([0, 100, 200, 400, 500, 700, 800, 900, 1100, 1300, 1500, 1700, 1900, 2000])*9.81/1000
 # define the bungee nonlinear spring model with interp1d()
 Fk_bungee = interp1d(xa, Fa, kind='cubic')
 # now to get Fk_bungee at x, just say Fk_bungee(x)
@@ -107,6 +106,7 @@ plt.plot(dis, Fk_bungee_plot,label='interpolation')
 plt.plot(xa, Fa, 'or', label='measurements')
 plt.legend()
 plt.grid()
-plt.xlabel('dispalcement [m]')
+plt.xlabel('displacement [m]')
 plt.ylabel('Force [N]')
 plt.title('Bungee Force vs Displacement')
+plt.show()

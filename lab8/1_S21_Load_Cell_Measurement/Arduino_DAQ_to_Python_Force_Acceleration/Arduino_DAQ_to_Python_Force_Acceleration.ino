@@ -24,7 +24,7 @@ int rawGyroZ = 0;
 
 
 void setup() {
-  Serial.begin(38400);         // Being serial comms and set Baud rate
+  SerialUSB.begin(38400);         // Being SerialUSB comms and set Baud rate
   Wire.begin();
   if ((myScale.begin() == false) || (IMU.begin() == false)){ // Waits until accelerometer connection is made
     while(1);
@@ -37,8 +37,8 @@ void setup() {
  
 void loop() {
 
-  if (Serial.available() > 0) {       // if data is available
-    String str = Serial.readStringUntil('\n');
+  if (SerialUSB.available() > 0) {       // if data is available
+    String str = SerialUSB.readStringUntil('\n');
     readFromPC(str);
   }
   if (initLooptime && !stopProgram)      // once loop time has been initialized
@@ -56,7 +56,7 @@ void loop() {
     rawGyroZ = IMU.readRawGyroZ();     // get Z gyro raw data (Integer value)
 
         
-    // Send data over serial line to computer
+    // Send data over SerialUSB line to computer
     sendToPC(&currT);
     sendToPC(&currentReading);
     sendToPC(&rawAccX);
@@ -139,29 +139,29 @@ void readFromPC(const String input)
 void sendToPC(int* data)
 {
   byte* byteData = (byte*)(data);
-  Serial.write(byteData, 2);
+  SerialUSB.write(byteData, 2);
 }
 
 void sendToPC(float* data)
 {
   byte* byteData = (byte*)(data);
-  Serial.write(byteData, 4);
+  SerialUSB.write(byteData, 4);
 }
  
 void sendToPC(double* data)
 {
   byte* byteData = (byte*)(data);
-  Serial.write(byteData, 4);
+  SerialUSB.write(byteData, 4);
 }
 
 void sendToPC(unsigned long* data)
 {
   byte* byteData = (byte*)(data);
-  Serial.write(byteData, 4);
+  SerialUSB.write(byteData, 4);
 }
 
 void sendToPC(long* data)
 {
   byte* byteData = (byte*)(data);
-  Serial.write(byteData, 4);
+  SerialUSB.write(byteData, 4);
 }

@@ -6,7 +6,7 @@ from scipy.fft import fft
 plt.close('all')
 
 
-filename = 'LoadCellIMU_bungee_500g_dynamic.csv'
+filename = 'LoadCellIMU_500g_static.csv'
 
 data = pd.read_csv(filename)
 
@@ -26,12 +26,15 @@ it2 = np.nonzero(t < T2)[0][-1]
 time = t[it1:it2]
 f = f[it1:it2]
 z_a = z_a[it1:it2]
+wx = wx[it1:it2]*0.061e-3
+wy = wy[it1:it2]*0.061e-3
+wz = wz[it1:it2]*0.061e-3
 
 # enter parameters
-m_bungee_g = 0.
-cal_slope  = 0.
-cal_int    = 0.
-m_weight = 0.0 # kg
+m_bungee_g = 30.669+0.000321*(654496)-200
+cal_slope  = 0.000321
+cal_int    = 30.669
+m_weight = 0.5 # kg
 f_N = ((f*cal_slope + cal_int) - m_bungee_g)/1000.*9.81 # Force in newtowns
 
 # Get acceleration data
@@ -44,8 +47,9 @@ f_acc = -z_a_ms2*m_weight
 
 
 # Plots
-fig, (ax1, ax2) = plt.subplots(2,1,sharex=True)
+fig, (ax1, ax2, ax3) = plt.subplots(3,1,sharex=True)
 
+print(sum(f_N)/len(f_N))
 ax1.plot(time, f_N, label='force_meas')
 ax1.plot(time, f_acc, label='force_acc')
 ax1.grid()
@@ -55,8 +59,17 @@ ax1.set_ylabel('Force [N]')
 
 ax2.plot(time, z_a_ms2, label='acceleration')
 ax2.grid()
-ax2.legend()
 ax2.set_xlabel('Time [s]')
 ax2.set_ylabel('acc [m/s^2]')
+
+ax3.plot(time, wx, label='wx')
+ax3.plot(time, wy, label='wy')
+ax3.plot(time, wz, label='wz')
+ax3.grid()
+ax3.legend()
+ax3.set_xlabel('Time [s]')
+ax3.set_ylabel('angular velocity (dps)')
+
+plt.show()
 
 

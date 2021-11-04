@@ -1,7 +1,7 @@
 from ArduinoDAQ import SerialConnect
 import numpy as np
 
-portName = 'COM12'                      # Communications port name. Make sure it matches port in Arduino IDE
+portName = 'COM4'                      # Communications port name. Make sure it matches port in Arduino IDE
 # portName = '/dev/ttyUSB0'
 baudRate   = 38400                     # Baud Rate
 dataRate   = 100                       # Acquisition data rate (Hz), do not exceed 500
