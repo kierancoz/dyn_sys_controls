@@ -25,15 +25,16 @@ def two_can(x, t, K1, K2):
 
 	return np.array([-Q1, +Q1-Q2]), y
 
-V1o, V2o = 406, 0
+V1o, V2o = 840, 0 # 960
 dt, t0, tf = 0.001, 0.0, 100
 N = math.floor(abs(tf-t0)/dt)
 x0 = np.array([V1o, V2o])
-t = np.linspace(0, tf, N)
+t = np.linspace(0, tf, N) # 705
 # values for Cans 202001 and 202002
 # K1, K2 = 0.6475793359183775, 0.24142018676686405 # this is K/2
 # K1, K2 = 1.295158671836755 , 0.4828403735337281
-K1, K2 = 0.03577, 0.11
+#K1, K2 = 0.03577, 0.11
+K1, K2 =  1.0989 * 2, 0.487 * 2
 sol1 = rk.rk4fixed(two_can, x0, t, args=(K1, K2))
 V11 = sol1[:,0]
 V21 = sol1[:,1]
@@ -46,9 +47,9 @@ for i in range(len(t)):
 
 print("Peak volume in V2 is :" + str(max(V21)))
 
-# run with ideal values
-# K1, K2 = 1.877055, 0.577013
-K1, K2 = 0.03577, 0.11
+# # run with ideal values
+K1, K2 = 1.877055, 0.577013
+#K1, K2 = 0.3812, 0.1239
 
 sol2 = rk.rk4fixed(two_can, x0, t, args=(K1, K2))
 V12 = sol2[:,0]
