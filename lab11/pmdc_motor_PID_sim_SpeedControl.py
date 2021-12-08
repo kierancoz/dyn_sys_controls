@@ -138,7 +138,7 @@ data = pd.read_csv(filename)
 
 # dataNames = ['Time', 'wm_ref', 'wm','PWM']
 time    = np.array(data.Time)   # [s]
-wm_ref_2  = np.array(data.wm_ref) # [rad/s]
+wm_ref  = np.array(data.wm_ref) # [rad/s]
 wm_exp  = np.array(data.wm)     # [rad/s]
 PWM     = np.array(data.PWM)    # [int]
 
@@ -153,7 +153,7 @@ ax1.set_ylabel('PWM [Int]')
 # ax1.set_ylim([-2,5])
 ax2.plot(ts, Xwm, '.-', label='wm')
 ax2.plot(ts, wm_ref, '--', label='wm_ref')
-ax2.plot([x-5 for x in time[100:500]], wm_exp[100:500] , "--", label="wm_exp")
+ax2.plot(time, wm_exp, "--", label="wm_exp")
 ax2.set_ylabel('\omega [rad/s]')
 ax2.legend(loc="upper right")
 # ax2.set_ylim([-10,250])

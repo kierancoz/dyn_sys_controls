@@ -6,18 +6,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-# plt.close('all')
+plt.close('all')
 
 # %% Read CSV File and collect data
 
 #---------------------------
 # Import file and read data
-# Choose filename based on which Part file you wish to read
 #---------------------------
-filename     = 'Data/Lab10_CL_Step_20Hz.csv'          # step comparison
-#filename     = 'Data/Lab10_CL_Step_20Hz_stiction.csv' # step comparison for stiction wm
-#filename     = 'Data/Lab10_CL_sine_OL_20Hz.csv'          # open loop sine wave data
-#filename     = 'Data/Lab10_CL_sine_CL_20Hz.csv'          # closed loop sine wave data
+filename     = 'Demonstration_2.csv'  
 
 data = pd.read_csv(filename)
 
@@ -55,7 +51,7 @@ wm_error = wm_ref - wm_exp
 plt.figure()
 plt.plot(time, wm_error, label='$\omega_{m}$ error [rad/s]')
 plt.step(time,PWM,label='PWM [int]')
-plt.title("Speed Control Error and PWM output vs Time")
+plt.title("OL Speed Control Error and PWM output vs Time")
 plt.grid()
 plt.legend()
 plt.ylabel("Amplitude")
